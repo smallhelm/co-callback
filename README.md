@@ -38,7 +38,8 @@ Promise hell is a real place, it's complicated, has hidden errors, and lies to y
 
 As with any programming tool, you need learn, practice, and master. If you don't, you will waste a lot of time in hell.
 
-[escape callback hell](http://callbackhell.com/))
+[escape callback hell](http://callbackhell.com/)
+
 [escape promise hell](https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html)
 
 ## License
