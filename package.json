@@ -1,0 +1,36 @@
+{
+  "name": "co-callback",
+  "version": "0.0.0",
+  "description": "callback friendly `co` generator async control flow goodness",
+  "main": "index.js",
+  "scripts": {
+    "start": "onchange -i *.js -- npm test -s",
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smallhelm/co-callback.git"
+  },
+  "keywords": [
+    "co",
+    "flow",
+    "async",
+    "generator",
+    "coro",
+    "coroutine",
+    "callback"
+  ],
+  "author": "smallhelm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smallhelm/co-callback/issues"
+  },
+  "homepage": "https://github.com/smallhelm/co-callback#readme",
+  "dependencies": {
+    "co": "^4.6.0"
+  },
+  "devDependencies": {
+    "onchange": "^3.2.1",
+    "tape": "^4.6.3"
+  }
+}
