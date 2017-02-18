@@ -16,6 +16,7 @@
     "flow",
     "async",
     "generator",
+    "promise",
     "coro",
     "coroutine",
     "callback"
