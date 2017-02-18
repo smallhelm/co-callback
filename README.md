@@ -29,6 +29,9 @@ This simply outputs package.json concatenated with index.js
 ### cocb.run(fn\*, callback)
 Run the generator function, callback when finished.
 
+### cocb.wrap(fn\*)
+Same as [co.wrap](https://github.com/tj/co#var-fn--cowrapfn)
+
 ### cocb.toYieldable(fn)
 Converts a traditional callback function into one you can `yield` instead of using a callback as the final argument.
 

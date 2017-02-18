@@ -8,6 +8,7 @@ module.exports = {
             callback(err);
         });
     },
+    wrap: co.wrap,
     toYieldable: function(fn){
         return function(){
             var that = this;
