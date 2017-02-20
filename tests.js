@@ -87,3 +87,37 @@ test("toYieldable", function(t){
         t.end();
     });
 });
+
+test("promiseRun", function(t){
+    cocb.promiseRun(function*(){
+        return yield delay(1, null, 3);
+    })
+        .catch(t.end)
+        .then(function(val){
+            t.equals(val, 3);
+
+            var caught = false;
+            cocb.promiseRun(function*(){
+                return yield delay(1, "foo", 3);
+            })
+                .catch(function(err){
+                    caught = true;
+                    t.equals(err, "foo");
+                })
+                .then(function(){
+                    t.ok(caught === true) ;
+                    t.end();
+                });
+        });
+});
+
+test("isGeneratorFunction", function(t){
+    t.equal(cocb.isGeneratorFunction(function*(){}), true);
+    t.equal(cocb.isGeneratorFunction(function(){}), false);
+    var f = function(){};
+    f.next = function(){};
+    f.throw = function(){};
+    t.equal(cocb.isGeneratorFunction(f), false);
+    t.equal(cocb.isGeneratorFunction(cocb.wrap(function*(){})), false);
+    t.end();
+});
