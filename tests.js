@@ -65,6 +65,9 @@ test("order", function(t){
 });
 
 test("throw", function(t){
+
+    t.plan(3);
+
     var throwup = function(){
         throw "foobar"
     };
@@ -73,7 +76,28 @@ test("throw", function(t){
         t.fail();
     }, function(err){
         t.deepEquals(err, "foobar");
-        t.end();
+    });
+
+
+    var throwupYieldable = cocb.toYieldable(function(callback){
+        throw "baz";
+    });
+    cocb.run(function*(){
+        yield throwupYieldable();
+        t.fail();
+    }, function(err){
+        t.deepEquals(err, "baz");
+    });
+
+
+    var throwupCBYieldable = cocb.toYieldable(function(callback){
+        callback("qux");
+    });
+    cocb.run(function*(){
+        yield throwupCBYieldable();
+        t.fail();
+    }, function(err){
+        t.deepEquals(err, "qux");
     });
 });
 
