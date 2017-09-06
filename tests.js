@@ -143,5 +143,13 @@ test("isGeneratorFunction", function(t){
     f.throw = function(){};
     t.equal(cocb.isGeneratorFunction(f), false);
     t.equal(cocb.isGeneratorFunction(cocb.wrap(function*(){})), false);
+
+    t.equal(cocb.isGeneratorFunction(void 0), false);
+    t.equal(cocb.isGeneratorFunction(null), false);
+    t.equal(cocb.isGeneratorFunction(false), false);
+    t.equal(cocb.isGeneratorFunction(NaN), false);
+    t.equal(cocb.isGeneratorFunction([]), false);
+    t.equal(cocb.isGeneratorFunction({}), false);
+
     t.end();
 });
