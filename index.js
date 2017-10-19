@@ -28,13 +28,18 @@ module.exports = {
     toYieldable: function(fn){
         return function(){
             var that = this;
-            var args = Array.prototype.slice.call(arguments);
+            var args = [];
+            var i;
+            for(i=0; i < fn.length - 1; i++){
+                args.push(i < arguments.length ? arguments[i] : void 0);
+            }
             return new Promise(function(resolve, reject){
                 var callback = function(err, data){
                     if(err) reject(err);
                     else resolve(data);
                 };
-                fn.apply(that, args.concat([callback]));
+                args.push(callback);
+                fn.apply(that, args);
             });
         };
     },

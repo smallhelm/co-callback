@@ -102,14 +102,24 @@ test("throw", function(t){
 });
 
 test("toYieldable", function(t){
-    var readFileYieldable = cocb.toYieldable(fs.readFile);
-    cocb.run(function*(){
-        return yield readFileYieldable(path.resolve(__dirname, "package.json"));
-    }, function(err, data){
-        if(err) return t.end(err);
-        t.ok(data.length > 0);
-        t.end();
+
+    var fnWith2Args = cocb.toYieldable(function(a, b, callback){
+        callback(null, [a, b]);
     });
+
+    var readFileYieldable = cocb.toYieldable(fs.readFile);
+
+    cocb.run(function*(){
+
+        t.deepEquals(yield fnWith2Args(1, 2), [1, 2]);
+        t.deepEquals(yield fnWith2Args(1), [1, void 0], "callback works if less than required args are given");
+        t.deepEquals(yield fnWith2Args(), [void 0, void 0], "callback works if no args are given");
+        t.deepEquals(yield fnWith2Args(3, 2, 1), [3, 2], "extra args are ignored, and callback still works");
+
+        var txt = yield readFileYieldable(path.resolve(__dirname, "package.json"));
+        t.ok(txt.length > 0);
+
+    }, t.end);
 });
 
 test("promiseRun", function(t){
