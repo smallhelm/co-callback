@@ -3,11 +3,12 @@ var cocb = require("./");
 var path = require("path");
 var test = require("tape");
 
-var delay = cocb.toYieldable(function(time, err, data, callback){
+var delay = cocb.wrap(function(time, err, data, callback){
     setTimeout(function(){
         callback(err, data);
     }, time);
 });
+
 
 
 test("run", function(t){
@@ -27,10 +28,11 @@ test("run", function(t){
     });
 });
 
+
 test("order", function(t){
     var events = [];
 
-    var delayE = cocb.toYieldable(function(id, time, err, data, callback){
+    var delayE = cocb.wrap(function(id, time, err, data, callback){
         events.push("start:" + id);
         setTimeout(function(){
             if(err) return callback(err);
@@ -64,6 +66,7 @@ test("order", function(t){
     });
 });
 
+
 test("throw", function(t){
 
     t.plan(3);
@@ -79,7 +82,7 @@ test("throw", function(t){
     });
 
 
-    var throwupYieldable = cocb.toYieldable(function(callback){
+    var throwupYieldable = cocb.wrap(function(callback){
         throw "baz";
     });
     cocb.run(function*(){
@@ -90,7 +93,7 @@ test("throw", function(t){
     });
 
 
-    var throwupCBYieldable = cocb.toYieldable(function(callback){
+    var throwupCBYieldable = cocb.wrap(function(callback){
         callback("qux");
     });
     cocb.run(function*(){
@@ -101,13 +104,14 @@ test("throw", function(t){
     });
 });
 
-test("toYieldable", function(t){
 
-    var fnWith2Args = cocb.toYieldable(function(a, b, callback){
+test("wrap", function(t){
+
+    var fnWith2Args = cocb.wrap(function(a, b, callback){
         callback(null, [a, b]);
     });
 
-    var readFileYieldable = cocb.toYieldable(fs.readFile);
+    var readFileYieldable = cocb.wrap(fs.readFile);
 
     cocb.run(function*(){
 
@@ -122,28 +126,6 @@ test("toYieldable", function(t){
     }, t.end);
 });
 
-test("promiseRun", function(t){
-    cocb.promiseRun(function*(){
-        return yield delay(1, null, 3);
-    })
-        .catch(t.end)
-        .then(function(val){
-            t.equals(val, 3);
-
-            var caught = false;
-            cocb.promiseRun(function*(){
-                return yield delay(1, "foo", 3);
-            })
-                .catch(function(err){
-                    caught = true;
-                    t.equals(err, "foo");
-                })
-                .then(function(){
-                    t.ok(caught === true) ;
-                    t.end();
-                });
-        });
-});
 
 test("isGeneratorFunction", function(t){
     t.equal(cocb.isGeneratorFunction(function*(){}), true);

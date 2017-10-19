@@ -19,13 +19,10 @@ module.exports = {
             callback(err);
         });
     },
-    promiseRun: function(gen_fn){
-        return co(gen_fn);
-    },
-    wrap: function(gen_fn){
-        return co.wrap(gen_fn);
-    },
-    toYieldable: function(fn){
+    wrap: function(fn){
+        if(isGeneratorFunction(fn)){
+            return co.wrap(fn);
+        }
         return function(){
             var that = this;
             var args = [];

@@ -2,14 +2,14 @@
 
 [![build status](https://secure.travis-ci.org/smallhelm/co-callback.svg)](https://travis-ci.org/smallhelm/co-callback)
 
-callback friendly [co](https://www.npmjs.com/package/co) generator async control flow goodness
+callback friendly [co](https://www.npmjs.com/package/co) for generator async control flow
 
 ## Example
 ```js
 var fs = require("fs");
 var cocb = require("co-callback");
 
-var readFileYieldable = cocb.toYieldable(fs.readFile);
+var readFileYieldable = cocb.wrap(fs.readFile);
 
 cocb.run(function*(){
 
@@ -29,17 +29,31 @@ This simply outputs package.json concatenated with index.js
 ### cocb.run(fn\*, callback)
 Run the generator function, callback when finished.
 
-### cocb.toYieldable(fn)
-Converts a traditional callback function into one you can `yield` instead of using a callback as the final argument.
-
 ### cocb.isGeneratorFunction(v)
 return true if it is a generator function
 
-### cocb.promiseRun(fn\*)
-Same as [co](https://github.com/tj/co#cofnthen-val--)
+### cocb.wrap(fn\_with\_callback) or cocb.wrap(fn\*)
 
-### cocb.wrap(fn\*)
-Same as [co.wrap](https://github.com/tj/co#var-fn--cowrapfn)
+Converts a callback function, or generator into one you can `yield`. (i.e. a `Promise` function - see [co.wrap](https://github.com/tj/co#var-fn--cowrapfn))
+
+For example:
+
+```sh
+var foo = cocb.wrap(function(a, b, callback){
+   // some callback async stuff...
+});
+
+var bar = cocb.wrap(function * (one, two){
+   // some yield async stuff...
+});
+
+cocb.run(function*(){
+
+    yield foo("a", "b")
+    yield bar(1, 2)
+
+}, callback);
+```
 
 
 ## Promises are lies ;)
