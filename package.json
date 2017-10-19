@@ -1,6 +1,6 @@
 {
   "name": "co-callback",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "callback friendly `co` generator async control flow goodness",
   "main": "index.js",
   "scripts": {
