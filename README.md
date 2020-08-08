@@ -1,3 +1,7 @@
+# Deprecated!
+
+This is an outdated solution. Use async/await instead.
+
 # co-callback
 
 [![build status](https://secure.travis-ci.org/smallhelm/co-callback.svg)](https://travis-ci.org/smallhelm/co-callback)
@@ -54,17 +58,6 @@ cocb.run(function*(){
 
 }, callback);
 ```
-
-
-## Promises are lies ;)
-
-Promise hell is a real place, it's complicated, has hidden errors, and lies to you with a smile. Callbacks are simpler and naturally robust, but yes, it has a hell too.
-
-As with any programming tool, you need learn, practice, and master. If you don't, you will waste a lot of time in hell.
-
-[escape callback hell](http://callbackhell.com/)
-
-[escape promise hell](https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html)
 
 ## License
 MIT

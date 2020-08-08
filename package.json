@@ -4,7 +4,6 @@
   "description": "callback friendly `co` generator async control flow goodness",
   "main": "index.js",
   "scripts": {
-    "start": "onchange -i *.js -- npm test -s",
     "test": "node tests.js"
   },
   "repository": {
@@ -31,7 +30,6 @@
     "co": "^4.6.0"
   },
   "devDependencies": {
-    "onchange": "^3.2.1",
-    "tape": "^4.6.3"
+    "tape": "^5.0.1"
   }
 }
